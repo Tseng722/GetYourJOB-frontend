@@ -2,11 +2,11 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:5001/api", // 改成你的後端
+    baseURL: "http://localhost:8080/api", // 改成你的後端
     headers: {
         "Content-Type": "application/json",
     },
-    withCredentials: false, // 若後端有跨域 JWT，可改 true
+    withCredentials: true, // 若後端有跨域 JWT，可改 true
 });
 
 // ✅ Request 攔截器
