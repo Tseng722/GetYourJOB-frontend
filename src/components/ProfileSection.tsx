@@ -77,7 +77,6 @@ const ProfileSection: React.FC = () => {
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                     type="text"
-                    id="name"
                     placeholder="Enter your name"
                     value={formData.name}
                     onChange={handleChange}
@@ -88,7 +87,6 @@ const ProfileSection: React.FC = () => {
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
                     type="email"
-                    id="email"
                     placeholder="Enter your email"
                     value={formData.email}
                     onChange={handleChange}
@@ -99,9 +97,8 @@ const ProfileSection: React.FC = () => {
                 <Form.Label>Phone</Form.Label>
                 <Form.Control
                     type="tel"
-                    id="phone"
                     placeholder="Enter your phone"
-                    value={formData.phone}
+                    value={formData.phone ?? ""}
                     onChange={handleChange}
                 />
             </Form.Group>
@@ -110,21 +107,19 @@ const ProfileSection: React.FC = () => {
                 <Form.Label>Current Location</Form.Label>
                 <Form.Control
                     type="text"
-                    id="location"
                     placeholder="Enter your location"
-                    value={formData.location}
+                    value={formData.location ?? ""}
                     onChange={handleChange}
                 />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="experience">
-                <Form.Label>Brief Self Introduction</Form.Label>
+                <Form.Label>Experiences</Form.Label>
                 <Form.Control
                     as="textarea"
                     rows={4}
-                    id="experience"
                     placeholder="Enter something....."
-                    value={formData.experience}
+                    value={formData.experience ?? ""}
                     onChange={handleChange}
                 />
             </Form.Group>
