@@ -1,18 +1,16 @@
 import React, { useState, useEffect, type ChangeEvent } from "react";
 import { Form, Button, Row, Col, Container, Alert, Spinner } from "react-bootstrap";
 
-import { getApplicationById, updateApplication } from "../api/applicationApi";
-import { useParams, useNavigate } from "react-router-dom";
+import { createApplication } from "../api/applicationApi";
+import { useNavigate } from "react-router-dom";
 import type { ApplicationForm, StatusType } from "../types/applicationType";
 
 
-const UpdateApplication: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
+const CreateApplication: React.FC = () => {
     const [form, setForm] = useState<ApplicationForm>({
-        id: Number(id),
         companyTitle: "",
         jobTitle: "",
-        applicationDate: "",
+        applicationDate: new Date().toISOString().split('T')[0],
         resourceId: "",
         applyById: "",
         website: "",
@@ -25,21 +23,6 @@ const UpdateApplication: React.FC = () => {
     const [success, setSuccess] = useState<boolean>(false);
     const navigate = useNavigate()
 
-    // 初始化載入資料
-
-    useEffect(() => {
-        async function loadApplication() {
-            try {
-                const data = await getApplicationById(Number(id));
-                setForm(data);
-            } catch (err: any) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        }
-        loadApplication();
-    }, []);
     const statusOptions: Array<{ value: StatusType; label: string }> = [
         { value: "inProgress", label: "In progress" },
         { value: "applyed", label: "Applied" },
@@ -53,7 +36,6 @@ const UpdateApplication: React.FC = () => {
     ];
 
 
-    // 處理輸入變更
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { id, value } = e.target;
         setForm((prev) => ({
@@ -69,8 +51,9 @@ const UpdateApplication: React.FC = () => {
         setSuccess(false);
         setError(null);
         try {
-            await updateApplication(form);
+            await createApplication(form);
             setSuccess(true);
+            navigate("/overview")
         } catch (err: any) {
             setError(err.message || "儲存失敗");
         } finally {
@@ -78,7 +61,6 @@ const UpdateApplication: React.FC = () => {
         }
     };
 
-    if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
     return (
@@ -156,7 +138,6 @@ const UpdateApplication: React.FC = () => {
                             </Form.Select>
                         </Form.Group>
                     </Col>
-
                     <Col md={3}>
                         <Form.Group controlId="applyById">
                             <Form.Label>Apply By</Form.Label>
@@ -187,17 +168,6 @@ const UpdateApplication: React.FC = () => {
                     />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="howManyApplicant">
-                    <Form.Label>How many applicants</Form.Label>
-                    <Form.Control
-                        type="number"
-                        min={0}
-                        value={form.howManyApplicant ?? ""}
-                        onChange={handleChange}
-                        placeholder="Number of applicants"
-                    />
-                </Form.Group>
-
                 <Form.Group className="mb-3" controlId="jobDescription">
                     <Form.Label>Job Description</Form.Label>
                     <Form.Control
@@ -208,32 +178,12 @@ const UpdateApplication: React.FC = () => {
                     />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="coverLetter">
-                    <Form.Label>Cover Letter</Form.Label>
-                    <Form.Control
-                        as="textarea"
-                        rows={4}
-                        value={form.coverLetter ?? ""}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="qusetion">
-                    <Form.Label>Question / Notes</Form.Label>
-                    <Form.Control
-                        as="textarea"
-                        rows={3}
-                        value={form.qusetion ?? ""}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-
                 <div className="d-flex gap-2">
                     <Button variant="secondary" onClick={() => navigate(-1)}>
                         Back
                     </Button>
-                    <Button type="submit" variant="primary" disabled={loading}>
-                        {loading ? (
+                    <Button type="submit" variant="primary" disabled={saving}>
+                        {saving ? (
                             <>
                                 <Spinner animation="border" size="sm" /> Saving...
                             </>
@@ -241,7 +191,7 @@ const UpdateApplication: React.FC = () => {
                             form.id ? "Update" : "Create"
                         )}
                     </Button>
-                    {success && <span style={{ color: "green" }}>Updated</span>}
+                    {success && <span style={{ color: "green" }}>Success</span>}
                 </div>
 
             </Form>
@@ -250,4 +200,4 @@ const UpdateApplication: React.FC = () => {
     );
 };
 
-export default UpdateApplication;
+export default CreateApplication;

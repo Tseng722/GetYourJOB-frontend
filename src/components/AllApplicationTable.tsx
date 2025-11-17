@@ -27,11 +27,14 @@ const AllApplicationTable: React.FC = () => {
 
     if (loading) return <Spinner animation="border" />
     if (error) return <Alert variant="danger">{error}</Alert>
-    if (applications.length === 0) return <p>No applications found.</p>
+    // if (applications.length === 0) return <p>No applications found.</p>
 
     return (
         <Container className="mt-4">
             <h4>Your Applications</h4>
+            <Button variant="primary" onClick={() => navigate(`/applications/create`)}>
+                New
+            </Button>
             <Table bordered hover responsive>
                 <thead>
                     <tr>

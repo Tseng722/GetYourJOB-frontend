@@ -18,6 +18,7 @@ export default function AppRouter() {
                 <Route path="/overview" element={<Overview />} />
 
                 <Route path="/applications/update/:id" element={<Application />} />
+                <Route path="/applications/create" element={<Application />} />
             </Routes>
         </BrowserRouter>
     );
