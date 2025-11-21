@@ -39,3 +39,13 @@ export async function updateUserProfile(
         throw new Error(message)
     }
 }
+
+export async function getUserExperience(): Promise<UserProfile["experience"]> {
+    try {
+        const res = await axiosClient.get<UserProfile>("/user/getUserExperience")
+        return res.data.experience
+    } catch (err: any) {
+        const message = err.response?.data?.message || "Failed to fetch Experience"
+        throw new Error(message)
+    }
+}
