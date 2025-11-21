@@ -168,6 +168,17 @@ const CreateApplication: React.FC = () => {
                     />
                 </Form.Group>
 
+                <Form.Group className="mb-3" controlId="howManyApplicant">
+                    <Form.Label>How many applicants</Form.Label>
+                    <Form.Control
+                        type="number"
+                        min={0}
+                        value={form.howManyApplicant ?? ""}
+                        onChange={handleChange}
+                        placeholder="Number of applicants"
+                    />
+                </Form.Group>
+
                 <Form.Group className="mb-3" controlId="jobDescription">
                     <Form.Label>Job Description</Form.Label>
                     <Form.Control
