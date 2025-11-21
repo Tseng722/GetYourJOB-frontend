@@ -1,9 +1,13 @@
 import React, { useState, useEffect, type ChangeEvent } from "react";
-import { Form, Button, Row, Col, Container, Alert, Spinner } from "react-bootstrap";
+import { Form, Button, Row, Col, Container, Alert, Spinner, Accordion } from "react-bootstrap";
 
 import { getApplicationById, updateApplication } from "../api/applicationApi";
+import { analyzeJD, analyzeResume, analyzeATS } from "../api/analyzeApi";
+import { getUserExperience } from "../api/userApi";
 import { useParams, useNavigate } from "react-router-dom";
 import type { ApplicationForm, StatusType } from "../types/applicationType";
+import { marked } from "marked";
+
 
 
 const UpdateApplication: React.FC = () => {
@@ -16,8 +20,13 @@ const UpdateApplication: React.FC = () => {
         resourceId: "",
         applyById: "",
         website: "",
+        analyzedJDResponse: "",
+        jobDescription: "",
+        resumeSuggestionResponse: "",
+        atsDescriptionResponse: ""
     });
 
+    const [experience, setExperience] = useState<string | null>(null);
 
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -38,7 +47,18 @@ const UpdateApplication: React.FC = () => {
                 setLoading(false);
             }
         }
+        async function loadUserExperience() {
+            try {
+                const experience = await getUserExperience();
+                setExperience(experience);
+            } catch (err: any) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        }
         loadApplication();
+        loadUserExperience();
     }, []);
     const statusOptions: Array<{ value: StatusType; label: string }> = [
         { value: "inProgress", label: "In progress" },
@@ -77,7 +97,69 @@ const UpdateApplication: React.FC = () => {
             setSaving(false);
         }
     };
+    const handleAnalyzeJD = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setSaving(true);
+        setError(null);
+        setSuccess(false);
 
+        try {
+            const result = await analyzeJD({ jobDescription: form.jobDescription ?? "" });  // 呼叫 API
+            const jdText = result.analyzedJDResponse || "";
+
+            setForm(prev => ({
+                ...prev,
+                analyzedJDResponse: jdText
+            }));
+        } catch (err: any) {
+            setError(err.message || "Fail");
+        } finally {
+            setSaving(false);
+        }
+    };
+
+
+    const handleAnalyzeResume = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setSaving(true);
+        setError(null);
+        setSuccess(false);
+
+        try {
+            const result = await analyzeResume({ jd: form.jobDescription ?? "", experience: experience ?? "" });  // 呼叫 API
+            const resumeResult = result.resumeResult || "";
+
+            setForm(prev => ({
+                ...prev,
+                resumeSuggestionResponse: resumeResult
+            }));
+        } catch (err: any) {
+            setError(err.message || "Fail");
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    const handleAnalyzeATS = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setSaving(true);
+        setError(null);
+        setSuccess(false);
+
+        try {
+            const result = await analyzeATS({ jd: form.jobDescription ?? "", experience: experience ?? "" });  // 呼叫 API
+            const atsResult = result.atsResult || "";
+
+            setForm(prev => ({
+                ...prev,
+                atsDescriptionResponse: atsResult
+            }));
+        } catch (err: any) {
+            setError(err.message || "Fail");
+        } finally {
+            setSaving(false);
+        }
+    };
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
@@ -207,6 +289,94 @@ const UpdateApplication: React.FC = () => {
                         onChange={handleChange}
                     />
                 </Form.Group>
+
+                <Row className="mb-3">
+                    <Col md={11}>
+                        <Form.Group className="mb-3" controlId="analyzedJDResponse">
+                            <Accordion >
+                                <Accordion.Item eventKey="0">
+                                    <Accordion.Header><Form.Label>JD Analysis</Form.Label></Accordion.Header>
+                                    <Accordion.Body>
+                                        <div
+                                            // contentEditable
+                                            // className="form-control"
+                                            // style={{ minHeight: "150px", whiteSpace: "pre-wrap" }}
+                                            dangerouslySetInnerHTML={{ __html: marked(form.analyzedJDResponse ?? "") }}
+                                            onInput={(e) =>
+                                                setForm((prev) => ({
+                                                    ...prev,
+                                                    analyzedJDResponse: (e.target as HTMLDivElement).innerHTML
+                                                }))
+                                            }
+                                        />
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                        </Form.Group>
+                    </Col>
+                    <Col md={1}>
+                        <Button onClick={handleAnalyzeJD} disabled={saving} variant="primary" type="button">
+                            {saving ? "Analyzing..." : "Start"}
+                        </Button>
+                    </Col>
+                </Row>
+
+                <Row className="mb-3">
+                    <Col md={11}>
+                        <Form.Group className="mb-3" controlId="resumeSuggestionResponse">
+                            <Accordion >
+                                <Accordion.Item eventKey="0">
+                                    <Accordion.Header><Form.Label>Resume Suggestion</Form.Label></Accordion.Header>
+                                    <Accordion.Body>
+                                        <div
+                                            dangerouslySetInnerHTML={{ __html: marked(form.resumeSuggestionResponse ?? "") }}
+                                            onInput={(e) =>
+                                                setForm((prev) => ({
+                                                    ...prev,
+                                                    resumeSuggestionResponse: (e.target as HTMLDivElement).innerHTML
+                                                }))
+                                            }
+                                        />
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                        </Form.Group>
+                    </Col>
+                    <Col md={1}>
+                        <Button onClick={handleAnalyzeResume} disabled={saving} variant="primary" type="button">
+                            {saving ? "Analyzing..." : "Start"}
+                        </Button>
+                    </Col>
+                </Row>
+
+                <Row className="mb-3">
+                    <Col md={11}>
+                        <Form.Group className="mb-3" controlId="atsDescriptionResponse">
+                            <Accordion >
+                                <Accordion.Item eventKey="0">
+                                    <Accordion.Header><Form.Label>ATS Description</Form.Label></Accordion.Header>
+                                    <Accordion.Body>
+                                        <div
+                                            dangerouslySetInnerHTML={{ __html: marked(form.atsDescriptionResponse ?? "") }}
+                                            onInput={(e) =>
+                                                setForm((prev) => ({
+                                                    ...prev,
+                                                    atsDescriptionResponse: (e.target as HTMLDivElement).innerHTML
+                                                }))
+                                            }
+                                        />
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                        </Form.Group>
+                    </Col>
+                    <Col md={1}>
+                        <Button onClick={handleAnalyzeATS} disabled={saving} variant="primary" type="button">
+                            {saving ? "Analyzing..." : "Start"}
+                        </Button>
+                    </Col>
+                </Row>
+
 
                 <Form.Group className="mb-3" controlId="coverLetter">
                     <Form.Label>Cover Letter</Form.Label>
