@@ -147,7 +147,7 @@ const UpdateApplication: React.FC = () => {
         setSuccess(false);
 
         try {
-            const result = await analyzeATS({ jd: form.jobDescription ?? "", experience: experience ?? "" });  // 呼叫 API
+            const result = await analyzeATS({ jd: form.jobDescription ?? "", experience: form.resume ?? "" });  // 呼叫 API
             const atsResult = result.atsResult || "";
 
             setForm(prev => ({
@@ -348,6 +348,15 @@ const UpdateApplication: React.FC = () => {
                         </Button>
                     </Col>
                 </Row>
+                <Form.Group className="mb-3" controlId="resume">
+                    <Form.Label>Resume</Form.Label>
+                    <Form.Control
+                        as="textarea"
+                        rows={4}
+                        value={form.resume ?? ""}
+                        onChange={handleChange}
+                    />
+                </Form.Group>
 
                 <Row className="mb-3">
                     <Col md={11}>

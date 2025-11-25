@@ -21,6 +21,7 @@ export interface ApplicationForm {
     website?: string | null;
     howManyApplicant?: number | null;
     jobDescription?: string | null;
+    resume?: string | null;
     coverLetter?: string | null;
     qusetion?: string | null;
     analyzedJDResponse?: string | null;
