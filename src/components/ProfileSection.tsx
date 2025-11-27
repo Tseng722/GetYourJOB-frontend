@@ -117,7 +117,7 @@ const ProfileSection: React.FC = () => {
                 <Form.Label>Experiences</Form.Label>
                 <Form.Control
                     as="textarea"
-                    rows={4}
+                    rows={12}
                     placeholder="Enter something....."
                     value={formData.experience ?? ""}
                     onChange={handleChange}
