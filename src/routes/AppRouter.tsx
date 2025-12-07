@@ -8,6 +8,8 @@ import Overview from "../pages/Overview";
 import ManageApplication from "../pages/ManageApplication";
 import PersonalDetail from "../pages/PersonalDetail";
 import Application from "../pages/Application";
+import VerifyToken from "../components/VerifyToken";
+import PrivateRoute from "../components/PrivateRoute";
 // import Application from "../pages/Application";
 
 export default function AppRouter() {
@@ -18,13 +20,17 @@ export default function AppRouter() {
                 {/* <Route path="/application" element={<Application />} /> */}
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route element={<SidebarLayout />}>
-                    <Route path="/overview" element={<Overview />} />
-                    <Route path="/personalDetail" element={<PersonalDetail />} />
-                    <Route path="/applications" element={<Application />} />
-                    <Route path="/applications/update/:id" element={<ManageApplication />} />
-                    <Route path="/applications/create" element={<ManageApplication />} />
+                <Route element={<PrivateRoute />}>
+                    <Route element={<SidebarLayout />}>
+                        <Route path="/overview" element={<Overview />} />
+                        <Route path="/personalDetail" element={<PersonalDetail />} />
+                        <Route path="/applications" element={<Application />} />
+                        <Route path="/applications/update/:id" element={<ManageApplication />} />
+                        <Route path="/applications/create" element={<ManageApplication />} />
+                    </Route>
+
                 </Route>
+
             </Routes>
         </BrowserRouter>
     );
