@@ -48,6 +48,19 @@ export async function updateApplication(
         throw new Error(message)
     }
 }
+export async function deleteApplication(
+    id: number
+): Promise<ApplicationForm> {
+    try {
+        const res = await axiosClient.delete<ApplicationForm>(
+            `/application/deleteApplication/${id}`,
+        )
+        return res.data
+    } catch (err: any) {
+        const message = err.response?.data?.message || "Delete Fail"
+        throw new Error(message)
+    }
+}
 
 export async function createApplication(
     data: ApplicationForm

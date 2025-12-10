@@ -1,14 +1,14 @@
 import React, { useState, useEffect, type ChangeEvent } from "react";
 import { Form, Button, Row, Col, Container, Alert, Spinner, Accordion } from "react-bootstrap";
 
-import { getApplicationById, updateApplication } from "../api/applicationApi";
+import { getApplicationById, updateApplication, deleteApplication } from "../api/applicationApi";
 import { analyzeJD, analyzeResume, analyzeATS } from "../api/analyzeApi";
 import { getUserExperience } from "../api/userApi";
 import { useParams, useNavigate } from "react-router-dom";
 import type { ApplicationForm, StatusType } from "../types/applicationType";
 import { marked } from "marked";
 import {
-    Briefcase, LayoutGrid, User, ChevronRight, BarChart2, TrendingUp, Clock, AlertTriangle, Cpu, Edit3, CheckCircle, XCircle
+    ArrowLeft, BarChart2, TrendingUp, Clock, AlertTriangle, Cpu, Edit3, CheckCircle, XCircle
 } from 'lucide-react';
 
 
@@ -100,6 +100,21 @@ const UpdateApplication: React.FC = () => {
             setSaving(false);
         }
     };
+    const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setSaving(true);
+        setSuccess(false);
+        setError(null);
+        try {
+            await deleteApplication(Number(id));
+            navigate('/applications');
+        } catch (err: any) {
+            setError(err.message || "Delete fail");
+        } finally {
+            setSaving(false);
+        }
+
+    }
     const handleAnalyzeJD = async (e: React.FormEvent) => {
         e.preventDefault();
         setSaving(true);
@@ -168,10 +183,32 @@ const UpdateApplication: React.FC = () => {
 
     return (
         <Container className="mt-4 flex justify-between">
-
-            <h2 className="apple-title-primary mb-4">Edit Application</h2>
-
             <Form onSubmit={handleSave}>
+                <div className="d-flex gap-2 mb-4">
+                    <Button variant="secondary" onClick={() => navigate(-1)}>
+                        <ArrowLeft size={18} />
+                        Back
+                    </Button>
+
+                    <Button variant="dark" onClick={handleDelete}>
+                        Delete
+                    </Button>
+                    <Button type="submit" className="apple-btn-primary" disabled={loading}>
+                        {loading ? (
+                            <>
+                                <Spinner animation="border" size="sm" /> Saving...
+                            </>
+                        ) : (
+                            form.id ? "Save Changes" : "Create"
+                        )}
+                    </Button>
+                    {success && <span style={{ color: "green" }}>Updated</span>}
+                </div>
+
+
+                <h2 className="apple-title-primary mb-4">Edit Application</h2>
+
+
                 <div className="apple-card mb-4">
                     <h3 className="apple-title-secondary">Basic Information</h3>
                     <Row className="mb-3">
@@ -237,7 +274,7 @@ const UpdateApplication: React.FC = () => {
                                     onChange={handleChange}
                                 >
                                     <option value="">-- Select --</option>
-                                    <option value="Linkedin">Linkedin</option>
+                                    <option value="LinkedIn">LinkedIn</option>
                                     <option value="Website">Website</option>
                                     <option value="WelcomeToJungle">Welcome to jungle</option>
                                     <option value="Glassdoor">Glassdoor</option>
@@ -259,7 +296,7 @@ const UpdateApplication: React.FC = () => {
                                     onChange={handleChange}
                                 >
                                     <option value="">-- Select --</option>
-                                    <option value="Linkedin">Linkedin</option>
+                                    <option value="LinkedIn">LinkedIn</option>
                                     <option value="Website">Website</option>
                                     <option value="WelcomeToJungle">Welcome to jungle</option>
                                     <option value="Glassdoor">Glassdoor</option>
@@ -451,21 +488,6 @@ const UpdateApplication: React.FC = () => {
                 </div>
 
 
-                <div className="d-flex gap-2">
-                    <Button variant="secondary" onClick={() => navigate(-1)}>
-                        Back
-                    </Button>
-                    <Button type="submit" className="apple-btn-primary" disabled={loading}>
-                        {loading ? (
-                            <>
-                                <Spinner animation="border" size="sm" /> Saving...
-                            </>
-                        ) : (
-                            form.id ? "Save Changes" : "Create"
-                        )}
-                    </Button>
-                    {success && <span style={{ color: "green" }}>Updated</span>}
-                </div>
 
             </Form>
 
