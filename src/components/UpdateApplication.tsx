@@ -7,6 +7,9 @@ import { getUserExperience } from "../api/userApi";
 import { useParams, useNavigate } from "react-router-dom";
 import type { ApplicationForm, StatusType } from "../types/applicationType";
 import { marked } from "marked";
+import {
+    Briefcase, LayoutGrid, User, ChevronRight, BarChart2, TrendingUp, Clock, AlertTriangle, Cpu, Edit3, CheckCircle, XCircle
+} from 'lucide-react';
 
 
 
@@ -34,7 +37,7 @@ const UpdateApplication: React.FC = () => {
     const [success, setSuccess] = useState<boolean>(false);
     const navigate = useNavigate()
 
-    // 初始化載入資料
+
 
     useEffect(() => {
         async function loadApplication() {
@@ -164,260 +167,301 @@ const UpdateApplication: React.FC = () => {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <Container>
+        <Container className="mt-4 flex justify-between">
+
+            <h2 className="apple-title-primary mb-4">Edit Application</h2>
+
             <Form onSubmit={handleSave}>
-                <Row className="mb-3">
-                    <Col md={6}>
-                        <Form.Group controlId="companyTitle">
-                            <Form.Label>Company</Form.Label>
-                            <Form.Control
-                                value={form.companyTitle ?? ""}
-                                onChange={handleChange}
-                                placeholder="Company title"
-                            />
-                        </Form.Group>
-                    </Col>
+                <div className="apple-card mb-4">
+                    <h3 className="apple-title-secondary">Basic Information</h3>
+                    <Row className="mb-3">
+                        <Col md={6}>
+                            <Form.Group controlId="companyTitle">
+                                <Form.Label>Company</Form.Label>
+                                <Form.Control
+                                    value={form.companyTitle ?? ""}
+                                    onChange={handleChange}
+                                    placeholder="Company title"
+                                />
+                            </Form.Group>
+                        </Col>
 
-                    <Col md={6}>
-                        <Form.Group controlId="jobTitle">
-                            <Form.Label>Job Title *</Form.Label>
-                            <Form.Control
-                                required
-                                value={form.jobTitle}
-                                onChange={handleChange}
-                                placeholder="Job title"
-                            />
-                        </Form.Group>
-                    </Col>
-                </Row>
+                        <Col md={6}>
+                            <Form.Group controlId="jobTitle">
+                                <Form.Label>Job Title *</Form.Label>
+                                <Form.Control
+                                    required
+                                    value={form.jobTitle}
+                                    onChange={handleChange}
+                                    placeholder="Job title"
+                                />
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row className="mb-3">
+                        <Col md={6}>
+                            <Form.Group controlId="applicationDate">
+                                <Form.Label>Application Date</Form.Label>
+                                <Form.Control
+                                    type="date"
+                                    value={form.applicationDate ? new Date(form.applicationDate).toISOString().split("T")[0] : ""}
+                                    onChange={handleChange}
+                                />
+                            </Form.Group>
+                        </Col>
+                        <Col md={6}>
+                            <Form.Group controlId="status">
+                                <Form.Label>Status</Form.Label>
+                                <Form.Select
+                                    value={form.status ?? ""}
+                                    onChange={handleChange}
+                                >
+                                    <option value="">-- Select --</option>
+                                    {statusOptions.map((s) => (
+                                        <option key={s.value ?? "null"} value={s.value ?? ""}>
+                                            {s.label}
+                                        </option>
+                                    ))}
+                                </Form.Select>
+                            </Form.Group>
+                        </Col>
 
-                <Row className="mb-3">
-                    <Col md={3}>
-                        <Form.Group controlId="applicationDate">
-                            <Form.Label>Application Date</Form.Label>
-                            <Form.Control
-                                type="date"
-                                value={form.applicationDate ? new Date(form.applicationDate).toISOString().split("T")[0] : ""}
-                                onChange={handleChange}
-                            />
-                        </Form.Group>
-                    </Col>
+                    </Row>
 
-                    <Col md={3}>
-                        <Form.Group controlId="status">
-                            <Form.Label>Status</Form.Label>
-                            <Form.Select
-                                value={form.status ?? ""}
-                                onChange={handleChange}
-                            >
-                                <option value="">-- Select --</option>
-                                {statusOptions.map((s) => (
-                                    <option key={s.value ?? "null"} value={s.value ?? ""}>
-                                        {s.label}
-                                    </option>
-                                ))}
-                            </Form.Select>
-                        </Form.Group>
-                    </Col>
+                    <Row className="mb-3">
+                        <Col md={4}>
+                            <Form.Group controlId="resourceId">
+                                <Form.Label>Resource</Form.Label>
+                                <Form.Select
+                                    value={form.resourceId ?? ""}
+                                    onChange={handleChange}
+                                >
+                                    <option value="">-- Select --</option>
+                                    <option value="Linkedin">Linkedin</option>
+                                    <option value="Website">Website</option>
+                                    <option value="WelcomeToJungle">Welcome to jungle</option>
+                                    <option value="Glassdoor">Glassdoor</option>
+                                    <option value="Reed">Reed</option>
+                                    <option value="TotalJobs">TotalJobs</option>
+                                    <option value="Email">Email</option>
+                                    <option value="Networking">Networking</option>
+                                    <option value="Indeed">Indeed</option>
+                                    <option value="Other">Other</option>
+                                </Form.Select>
+                            </Form.Group>
+                        </Col>
 
-                    <Col md={3}>
-                        <Form.Group controlId="resourceId">
-                            <Form.Label>Resource</Form.Label>
-                            <Form.Select
-                                value={form.resourceId ?? ""}
-                                onChange={handleChange}
-                            >
-                                <option value="">-- Select --</option>
-                                <option value="Linkedin">Linkedin</option>
-                                <option value="Website">Website</option>
-                                <option value="WelcomeToJungle">Welcome to jungle</option>
-                                <option value="Email">Email</option>
-                                <option value="Networking">Networking</option>
-                                <option value="Indeed">Indeed</option>
-                                <option value="Other">Other</option>
-                            </Form.Select>
-                        </Form.Group>
-                    </Col>
+                        <Col md={4}>
+                            <Form.Group controlId="applyById">
+                                <Form.Label>Apply By</Form.Label>
+                                <Form.Select
+                                    value={form.applyById ?? ""}
+                                    onChange={handleChange}
+                                >
+                                    <option value="">-- Select --</option>
+                                    <option value="Linkedin">Linkedin</option>
+                                    <option value="Website">Website</option>
+                                    <option value="WelcomeToJungle">Welcome to jungle</option>
+                                    <option value="Glassdoor">Glassdoor</option>
+                                    <option value="Reed">Reed</option>
+                                    <option value="TotalJobs">TotalJobs</option>
+                                    <option value="Email">Email</option>
+                                    <option value="Networking">Networking</option>
+                                    <option value="Indeed">Indeed</option>
+                                    <option value="Other">Other</option>
+                                </Form.Select>
+                            </Form.Group>
+                        </Col>
+                        <Col md={4}>
+                            <Form.Group className="mb-3" controlId="howManyApplicant">
+                                <Form.Label>How many applicants</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    min={0}
+                                    value={form.howManyApplicant ?? ""}
+                                    onChange={handleChange}
+                                    placeholder="Number of applicants"
+                                />
+                            </Form.Group>
 
-                    <Col md={3}>
-                        <Form.Group controlId="applyById">
-                            <Form.Label>Apply By</Form.Label>
-                            <Form.Select
-                                value={form.applyById ?? ""}
-                                onChange={handleChange}
-                            >
-                                <option value="">-- Select --</option>
-                                <option value="Linkedin">Linkedin</option>
-                                <option value="Website">Website</option>
-                                <option value="WelcomeToJungle">Welcome to jungle</option>
-                                <option value="Email">Email</option>
-                                <option value="Networking">Networking</option>
-                                <option value="Indeed">Indeed</option>
-                                <option value="Other">Other</option>
-                            </Form.Select>
-                        </Form.Group>
-                    </Col>
-                </Row>
+                        </Col>
+                    </Row>
 
-                <Form.Group className="mb-3" controlId="website">
-                    <Form.Label>Website</Form.Label>
-                    <Form.Control
-                        type="url"
-                        value={form.website ?? ""}
-                        onChange={handleChange}
-                        placeholder="https://company.com/job"
-                    />
-                </Form.Group>
 
-                <Form.Group className="mb-3" controlId="howManyApplicant">
-                    <Form.Label>How many applicants</Form.Label>
-                    <Form.Control
-                        type="number"
-                        min={0}
-                        value={form.howManyApplicant ?? ""}
-                        onChange={handleChange}
-                        placeholder="Number of applicants"
-                    />
-                </Form.Group>
+                    <Form.Group className="mb-3" controlId="website">
+                        <Form.Label>Website</Form.Label>
+                        <Form.Control
+                            type="url"
+                            value={form.website ?? ""}
+                            onChange={handleChange}
+                            placeholder="https://company.com/job"
+                        />
+                    </Form.Group>
 
-                <Form.Group className="mb-3" controlId="jobDescription">
-                    <Form.Label>Job Description</Form.Label>
-                    <Form.Control
-                        as="textarea"
-                        rows={6}
-                        value={form.jobDescription ?? ""}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
+                    <Form.Group className="mb-3" controlId="jobDescription">
+                        <Form.Label>Job Description</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            rows={6}
+                            value={form.jobDescription ?? ""}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+                </div>
+                <h3 className="apple-title-secondary">AI Application Assistant</h3>
+                <div className="apple-card mb-4">
+                    <div className="d-flex justify-content-between align-items-center mb-4">
 
-                <Row className="mb-3">
-                    <Col md={11}>
-                        <Form.Group className="mb-3" controlId="analyzedJDResponse">
-                            <Accordion >
-                                <Accordion.Item eventKey="0">
-                                    <Accordion.Header><Form.Label>JD Analysis</Form.Label></Accordion.Header>
-                                    <Accordion.Body>
-                                        <div
-                                            // contentEditable
-                                            // className="form-control"
-                                            // style={{ minHeight: "150px", whiteSpace: "pre-wrap" }}
-                                            dangerouslySetInnerHTML={{ __html: marked(form.analyzedJDResponse ?? "") }}
-                                            onInput={(e) =>
-                                                setForm((prev) => ({
-                                                    ...prev,
-                                                    analyzedJDResponse: (e.target as HTMLDivElement).innerHTML
-                                                }))
-                                            }
-                                        />
-                                    </Accordion.Body>
-                                </Accordion.Item>
-                            </Accordion>
-                        </Form.Group>
-                    </Col>
-                    <Col md={1}>
-                        <Button onClick={handleAnalyzeJD} disabled={saving} variant="primary" type="button">
+                        <div className="d-flex align-items-center gap-2">
+                            <div className="icon-bg">
+                                <BarChart2 size={20} />
+                            </div>
+                            <h5 className="mb-0">JD Analysis</h5>
+                        </div>
+
+                        <Button
+                            onClick={handleAnalyzeJD}
+                            disabled={saving}
+                            type="button"
+                            className="apple-btn-primary"
+                        >
                             {saving ? "Analyzing..." : "Start"}
                         </Button>
-                    </Col>
-                </Row>
+                    </div>
+                    <p className="gray-text mb-4">Analyze the JD to extract key skills and requirements for better tailoring.</p>
+                    <Form.Group className="mb-3" controlId="analyzedJDResponse">
+                        <Accordion >
+                            <Accordion.Item eventKey="0">
+                                <Accordion.Header><Form.Label>JD Analysis Result</Form.Label></Accordion.Header>
+                                <Accordion.Body>
+                                    <div
+                                        dangerouslySetInnerHTML={{ __html: marked(form.analyzedJDResponse ?? "") }}
+                                        onInput={(e) =>
+                                            setForm((prev) => ({
+                                                ...prev,
+                                                analyzedJDResponse: (e.target as HTMLDivElement).innerHTML
+                                            }))
+                                        }
+                                    />
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
+                    </Form.Group>
+                </div>
+                <div className="apple-card mb-4">
+                    <div className="d-flex justify-content-between align-items-center mb-4">
 
-                <Row className="mb-3">
-                    <Col md={11}>
-                        <Form.Group className="mb-3" controlId="resumeSuggestionResponse">
-                            <Accordion >
-                                <Accordion.Item eventKey="0">
-                                    <Accordion.Header><Form.Label>Resume Suggestion</Form.Label></Accordion.Header>
-                                    <Accordion.Body>
-                                        <div
-                                            dangerouslySetInnerHTML={{ __html: marked(form.resumeSuggestionResponse ?? "") }}
-                                            onInput={(e) =>
-                                                setForm((prev) => ({
-                                                    ...prev,
-                                                    resumeSuggestionResponse: (e.target as HTMLDivElement).innerHTML
-                                                }))
-                                            }
-                                        />
-                                    </Accordion.Body>
-                                </Accordion.Item>
-                            </Accordion>
-                        </Form.Group>
-                    </Col>
-                    <Col md={1}>
-                        <Button onClick={handleAnalyzeResume} disabled={saving} variant="primary" type="button">
+                        <div className="d-flex align-items-center gap-2">
+                            <div className="icon-bg">
+                                <Edit3 size={20} />
+                            </div>
+                            <h5 className="mb-0">Resume Suggestion</h5>
+                        </div>
+
+                        <Button onClick={handleAnalyzeResume} disabled={saving} className="apple-btn-primary" type="button">
                             {saving ? "Analyzing..." : "Start"}
                         </Button>
-                    </Col>
-                </Row>
-                <Form.Group className="mb-3" controlId="resume">
-                    <Form.Label>Resume</Form.Label>
-                    <Form.Control
-                        as="textarea"
-                        rows={4}
-                        value={form.resume ?? ""}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
+                    </div>
+                    <p className="gray-text mb-4">Generate resume based on the JD and your experiences.</p>
+                    <Form.Group className="mb-3" controlId="resumeSuggestionResponse">
+                        <Accordion >
+                            <Accordion.Item eventKey="0">
+                                <Accordion.Header><Form.Label>Resume Result</Form.Label></Accordion.Header>
+                                <Accordion.Body>
+                                    <div
+                                        dangerouslySetInnerHTML={{ __html: marked(form.resumeSuggestionResponse ?? "") }}
+                                        onInput={(e) =>
+                                            setForm((prev) => ({
+                                                ...prev,
+                                                resumeSuggestionResponse: (e.target as HTMLDivElement).innerHTML
+                                            }))
+                                        }
+                                    />
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
+                    </Form.Group>
+                </div>
+                <div className="apple-card mb-4">
+                    <div className="d-flex justify-content-between align-items-center mb-4">
 
-                <Row className="mb-3">
-                    <Col md={11}>
-                        <Form.Group className="mb-3" controlId="atsDescriptionResponse">
-                            <Accordion >
-                                <Accordion.Item eventKey="0">
-                                    <Accordion.Header><Form.Label>ATS Description</Form.Label></Accordion.Header>
-                                    <Accordion.Body>
-                                        <div
-                                            dangerouslySetInnerHTML={{ __html: marked(form.atsDescriptionResponse ?? "") }}
-                                            onInput={(e) =>
-                                                setForm((prev) => ({
-                                                    ...prev,
-                                                    atsDescriptionResponse: (e.target as HTMLDivElement).innerHTML
-                                                }))
-                                            }
-                                        />
-                                    </Accordion.Body>
-                                </Accordion.Item>
-                            </Accordion>
-                        </Form.Group>
-                    </Col>
-                    <Col md={1}>
-                        <Button onClick={handleAnalyzeATS} disabled={saving} variant="primary" type="button">
+                        <div className="d-flex align-items-center gap-2">
+                            <div className="icon-bg">
+                                <Cpu size={20} />
+                            </div>
+                            <h5 className="mb-0">ATS Description</h5>
+                        </div>
+
+                        <Button onClick={handleAnalyzeATS} disabled={saving} className="apple-btn-primary" type="button">
                             {saving ? "Analyzing..." : "Start"}
                         </Button>
-                    </Col>
-                </Row>
+                    </div>
+                    <p className="gray-text mb-4">Generate an ATS-friendly summary to maximize keyword matching.</p>
+                    <Form.Group className="mb-3" controlId="resume">
+                        <Form.Label>Current Resume</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            rows={4}
+                            value={form.resume ?? ""}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="atsDescriptionResponse">
+                        <Accordion >
+                            <Accordion.Item eventKey="0">
+                                <Accordion.Header><Form.Label>ATS Description</Form.Label></Accordion.Header>
+                                <Accordion.Body>
+                                    <div
+                                        dangerouslySetInnerHTML={{ __html: marked(form.atsDescriptionResponse ?? "") }}
+                                        onInput={(e) =>
+                                            setForm((prev) => ({
+                                                ...prev,
+                                                atsDescriptionResponse: (e.target as HTMLDivElement).innerHTML
+                                            }))
+                                        }
+                                    />
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
+                    </Form.Group>
+                </div>
+                <div className="apple-card mb-4">
+                    <h3 className="apple-title-secondary">Documents & Notes</h3>
+                    <Form.Group className="mb-3" controlId="coverLetter">
+                        <Form.Label>Cover Letter</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            rows={4}
+                            value={form.coverLetter ?? ""}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="qusetion">
+                        <Form.Label>Question / Notes</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            rows={3}
+                            value={form.qusetion ?? ""}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
 
 
-                <Form.Group className="mb-3" controlId="coverLetter">
-                    <Form.Label>Cover Letter</Form.Label>
-                    <Form.Control
-                        as="textarea"
-                        rows={4}
-                        value={form.coverLetter ?? ""}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
+                </div>
 
-                <Form.Group className="mb-3" controlId="qusetion">
-                    <Form.Label>Question / Notes</Form.Label>
-                    <Form.Control
-                        as="textarea"
-                        rows={3}
-                        value={form.qusetion ?? ""}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
 
                 <div className="d-flex gap-2">
                     <Button variant="secondary" onClick={() => navigate(-1)}>
                         Back
                     </Button>
-                    <Button type="submit" variant="primary" disabled={loading}>
+                    <Button type="submit" className="apple-btn-primary" disabled={loading}>
                         {loading ? (
                             <>
                                 <Spinner animation="border" size="sm" /> Saving...
                             </>
                         ) : (
-                            form.id ? "Update" : "Create"
+                            form.id ? "Save Changes" : "Create"
                         )}
                     </Button>
                     {success && <span style={{ color: "green" }}>Updated</span>}

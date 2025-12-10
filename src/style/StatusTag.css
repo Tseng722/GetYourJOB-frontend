@@ -1,0 +1,67 @@
+.status-tag {
+    display: inline-block;
+    padding: 3px 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 10px;
+    /* pill style */
+    cursor: default;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+/* Hover animation */
+.status-tag:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* Colors */
+.inProgress {
+    background-color: #f3f4f6;
+    color: #374151;
+    border-color: rgba(107, 114, 128, 0.1);
+}
+
+.applyed {
+    background-color: #dbeafe;
+    color: #007aff;
+    border-color: rgba(59, 130, 246, 0.1);
+}
+
+.firstInterview,
+.secondInterview,
+.thirdInterview,
+.fourthInterview,
+.fifthInterview {
+    background-color: #fef9c3;
+    color: #a16207;
+    border-color: rgba(234, 179, 8, 0.1);
+}
+
+.offer {
+    background-color: #dcfce7;
+    color: #15803d;
+    border-color: rgba(34, 197, 94, 0.1);
+
+}
+
+.rejected {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border-color: rgba(239, 68, 68, 0.1);
+}
+
+.unknown {
+    background-color: #9ca3af;
+
+}
+
+
+/* Special colors (if you want them) */
+.amber {
+    background-color: #f59e0b;
+}
+
+.purple {
+    background-color: #a855f7;
+}

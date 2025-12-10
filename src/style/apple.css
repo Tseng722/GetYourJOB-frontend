@@ -1,0 +1,163 @@
+/* Apple-style color system */
+:root {
+    --primary: #007aff;
+    --secondary: #34c759;
+    --warning: #ff9500;
+    --danger: #ff3b30;
+    --background: #f2f2f7;
+    --card: #ffffff;
+
+    --text-primary: #1c1c1e;
+    --text-secondary: #525253;
+}
+
+/* Card shadow */
+.apple-card {
+    background-color: var(--card);
+    border-radius: 16px;
+    border: 1px solid #e5e5ea;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.04);
+    padding: 1.5rem;
+}
+
+
+/* Table */
+.apple-table-card {
+    background-color: var(--card);
+    border-radius: 16px;
+    border: 1px solid #e5e5ea;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.apple-table {
+    width: 100%;
+    border-collapse: collapse;
+
+}
+
+.apple-table thead {
+    background-color: #f7f7f8;
+}
+
+.apple-table th {
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    padding: 14px;
+    text-transform: uppercase;
+}
+
+.apple-table td {
+    padding: 16px;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.apple-table tr:hover {
+    background-color: #fafafa;
+}
+
+/* Button */
+.apple-btn-primary {
+    padding: 0.5rem 1rem;
+    /* py-2 px-4 */
+    /* background-color: #2563eb; */
+    background-color: #c74343;
+    /* bg-blue-600 */
+    color: white;
+    /* text-white */
+    border-radius: 0.5rem;
+    /* rounded-lg */
+    font-weight: 500;
+    /* font-medium */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* shadow-md */
+    transition: background-color 150ms;
+    /* transition-colors duration-150 */
+    border: none;
+    /* 去掉預設按鈕邊框 */
+    cursor: pointer;
+}
+
+
+
+/* 
+.apple-btn-primary {
+    background-color: var(--primary);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.2s;
+} */
+
+.apple-btn-primary:hover {
+    background-color: #ac3939;
+}
+
+.apple-action-btn {
+    color: var(--primary);
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.apple-action-btn:hover {
+    color: #004bb5;
+}
+
+.apple-title-primary {
+    color: var(--text-primary);
+    font-size: 1.875rem;
+    /* text-3xl */
+    line-height: 2.25rem;
+    /* text-3xl 對應的 line-height */
+
+    font-weight: 700;
+    /* font-bold */
+
+    letter-spacing: -0.025em;
+    /* tracking-tight */
+}
+
+.apple-title-secondary {
+    color: var(--text-secondary);
+    font-size: 1.6rem;
+    /* text-xl */
+    font-weight: 600;
+    /* font-semibold */
+    margin-bottom: 1rem;
+    /* mb-4 */
+    border-bottom: 1px solid #e5e7eb;
+    /* border-b (預設灰色) */
+    padding-bottom: 0.5rem;
+    /* pb-2 */
+
+    /* tracking-tight */
+}
+
+.apple-subtitle-primary {
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.gray-text {
+    font-size: 1rem;
+    /* text-sm */
+    color: #6b7280;
+    /* text-gray-500 */
+    margin-bottom: 1rem;
+    /* mb-4 */
+}
+
+
+.icon-bg {
+    padding: 0.5rem;
+    /* p-2 */
+    border-radius: 100px;
+    /* rounded-full */
+    background-color: #e9c4c4;
+    /* bg-indigo-50 */
+    color: #c74343;
+}

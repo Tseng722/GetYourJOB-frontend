@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Table, Spinner, Alert, Button, Container } from 'react-bootstrap'
+import { Table, Spinner, Alert, Button, Container, Row, Col } from 'react-bootstrap'
 import { getUserApplication, type AllApplication } from "../api/applicationApi"
 import { useNavigate } from 'react-router-dom'
-
+import StatusTag from '../style/StatusTag'
+import "../style/apple.css";
 const AllApplicationTable: React.FC = () => {
     const [applications, setApplications] = useState<AllApplication[]>([])
     const [loading, setLoading] = useState<boolean>(true)
@@ -31,50 +32,87 @@ const AllApplicationTable: React.FC = () => {
 
     return (
         <Container className="mt-4">
-            <h4>Your Applications</h4>
-            <Button variant="primary" onClick={() => navigate(`/applications/create`)}>
-                New
-            </Button>
-            <Table bordered hover responsive>
-                <thead>
-                    <tr>
-                        <th>Action</th>
-                        <th>Company</th>
-                        <th>Job Title</th>
-                        <th>Status</th>
-                        <th>Application Date</th>
-                        <th>Website</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {applications.map((app) => (
-                        <tr key={app.id ?? Math.random()}>
-                            <td>
-                                <Button
-                                    variant="secondary"
-                                    size="sm"
-                                    onClick={() => navigate(`/applications/update/${app.id}`)}
-                                >
-                                    View
-                                </Button>
-                            </td>
-                            <td>{app.companyTitle || '-'}</td>
-                            <td>{app.jobTitle}</td>
-                            <td>{app.status || '-'}</td>
-                            <td>{app.applicationDate ? new Date(app.applicationDate).toLocaleDateString() : '-'}</td>
-                            <td>
-                                {app.website ? (
-                                    <a href={app.website} target="_blank" rel="noopener noreferrer">
-                                        Link
-                                    </a>
-                                ) : (
-                                    '-'
-                                )}
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
+            <div className="max-w-6xl mx-auto p-8 space-y-8">
+                {/* Header */}
+                <div className="flex justify-between ">
+                    <Row>
+                        <Col md={9}>
+                            <h2 className='apple-title-primary'>Your Applications</h2>
+                        </Col>
+                        <Col md={3}>
+                            <button
+                                onClick={() => navigate(`/applications/create`)}
+                                className="apple-btn-primary"
+                            >
+                                + New Application
+                            </button>
+                        </Col>
+
+                    </Row>
+                </div>
+
+                {/* Card Container */}
+                <div className="apple-table-card mt-4" style={{
+                    overflow: "hidden",
+                }}>
+                    <table className="min-w-full apple-table">
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>Company</th>
+                                <th>Job Title</th>
+                                <th>Status</th>
+                                <th>Application Date</th>
+                                <th>Website</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {applications.map((app) => (
+                                <tr key={app.id ?? Math.random()}>
+                                    <td>
+                                        <span
+                                            className="apple-action-btn"
+                                            onClick={() => navigate(`/applications/update/${app.id}`)}
+                                        >
+                                            View →
+                                        </span>
+                                    </td>
+
+                                    <td>{app.companyTitle || "-"}</td>
+
+                                    <td className="max-w-xs truncate">{app.jobTitle}</td>
+
+                                    <td>
+                                        <StatusTag status={app.status ?? ""} />
+                                    </td>
+
+                                    <td>
+                                        {app.applicationDate
+                                            ? new Date(app.applicationDate).toLocaleDateString()
+                                            : "-"}
+                                    </td>
+
+                                    <td>
+                                        {app.website ? (
+                                            <a
+                                                href={app.website}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-blue-600 hover:underline"
+                                            >
+                                                Link
+                                            </a>
+                                        ) : (
+                                            "-"
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </Container>
     )
 }
