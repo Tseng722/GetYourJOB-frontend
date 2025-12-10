@@ -131,6 +131,9 @@ const CreateApplication: React.FC = () => {
                                 <option value="Linkedin">Linkedin</option>
                                 <option value="Website">Website</option>
                                 <option value="WelcomeToJungle">Welcome to jungle</option>
+                                <option value="WelcomeToJungle">Glassdoor</option>
+                                <option value="WelcomeToJungle">Reed</option>
+                                <option value="WelcomeToJungle">TotalJobs</option>
                                 <option value="Email">Email</option>
                                 <option value="Networking">Networking</option>
                                 <option value="Indeed">Indeed</option>
