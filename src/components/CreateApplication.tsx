@@ -128,7 +128,7 @@ const CreateApplication: React.FC = () => {
                                 onChange={handleChange}
                             >
                                 <option value="">-- Select --</option>
-                                <option value="Linkedin">Linkedin</option>
+                                <option value="LinkedIn">LinkedIn</option>
                                 <option value="Website">Website</option>
                                 <option value="WelcomeToJungle">Welcome to jungle</option>
                                 <option value="WelcomeToJungle">Glassdoor</option>
@@ -149,7 +149,7 @@ const CreateApplication: React.FC = () => {
                                 onChange={handleChange}
                             >
                                 <option value="">-- Select --</option>
-                                <option value="Linkedin">Linkedin</option>
+                                <option value="LinkedIn">LinkedIn</option>
                                 <option value="Website">Website</option>
                                 <option value="WelcomeToJungle">Welcome to jungle</option>
                                 <option value="Email">Email</option>
