@@ -70,67 +70,72 @@ const ProfileSection: React.FC = () => {
     if (error) return <p>錯誤: {error}</p>;
 
     return (
-        <Form onSubmit={handleSave}>
-            <h2 className="section-title">Personal Detail</h2>
+        <div className="apple-card mb-4">
+            <Form onSubmit={handleSave}>
+                <h2 className="section-title"></h2>
+                <h2 className="apple-title-primary mb-4">Personal Detail</h2>
 
-            <Form.Group className="mb-3" controlId="name">
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="Enter your name"
-                    value={formData.name}
-                    onChange={handleChange}
-                />
-            </Form.Group>
+                <Form.Group className="mb-3" controlId="name">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter your name"
+                        value={formData.name}
+                        onChange={handleChange}
+                    />
+                </Form.Group>
 
-            <Form.Group className="mb-3" controlId="email">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                    type="email"
-                    placeholder="Enter your email"
-                    value={formData.email}
-                    onChange={handleChange}
-                />
-            </Form.Group>
+                <Form.Group className="mb-3" controlId="email">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control
+                        type="email"
+                        placeholder="Enter your email"
+                        value={formData.email}
+                        onChange={handleChange}
+                    />
+                </Form.Group>
 
-            <Form.Group className="mb-3" controlId="phone">
-                <Form.Label>Phone</Form.Label>
-                <Form.Control
-                    type="tel"
-                    placeholder="Enter your phone"
-                    value={formData.phone ?? ""}
-                    onChange={handleChange}
-                />
-            </Form.Group>
+                <Form.Group className="mb-3" controlId="phone">
+                    <Form.Label>Phone</Form.Label>
+                    <Form.Control
+                        type="tel"
+                        placeholder="Enter your phone"
+                        value={formData.phone ?? ""}
+                        onChange={handleChange}
+                    />
+                </Form.Group>
 
-            <Form.Group className="mb-3" controlId="location">
-                <Form.Label>Current Location</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="Enter your location"
-                    value={formData.location ?? ""}
-                    onChange={handleChange}
-                />
-            </Form.Group>
+                <Form.Group className="mb-3" controlId="location">
+                    <Form.Label>Current Location</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter your location"
+                        value={formData.location ?? ""}
+                        onChange={handleChange}
+                    />
+                </Form.Group>
 
-            <Form.Group className="mb-3" controlId="experience">
-                <Form.Label>Experiences</Form.Label>
-                <Form.Control
-                    as="textarea"
-                    rows={12}
-                    placeholder="Enter something....."
-                    value={formData.experience ?? ""}
-                    onChange={handleChange}
-                />
-            </Form.Group>
+                <Form.Group className="mb-3" controlId="experience">
+                    <Form.Label>Experiences</Form.Label>
+                    <Form.Control
+                        as="textarea"
+                        rows={12}
+                        placeholder="Enter something....."
+                        value={formData.experience ?? ""}
+                        onChange={handleChange}
+                    />
+                </Form.Group>
 
-            <Button onClick={handleSave} disabled={saving} variant="primary" type="submit">
-                {saving ? "儲存中..." : "儲存"}
-            </Button>
+                <Button onClick={handleSave} disabled={saving} variant="primary" type="submit">
+                    {saving ? "儲存中..." : "儲存"}
+                </Button>
 
-            {success && <span style={{ color: "green", marginLeft: 10 }}>儲存成功！</span>}
-            {error && <span style={{ color: "red", marginLeft: 10 }}>{error}</span>}
-        </Form>
+                {success && <span style={{ color: "green", marginLeft: 10 }}>儲存成功！</span>}
+                {error && <span style={{ color: "red", marginLeft: 10 }}>{error}</span>}
+            </Form>
+
+        </div>
+
     );
 };
 
