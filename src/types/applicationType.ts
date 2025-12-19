@@ -1,6 +1,6 @@
 export type StatusType =
     | "inProgress"
-    | "applyed"
+    | "applied"
     | "firstInterview"
     | "secondInterview"
     | "thirdInterview"
@@ -37,4 +37,15 @@ export interface ApplicationForm {
     // fifthInterviewDate?: string | null;
     // offerDate?: string | null;
     // rejectedDate?: string | null;
+}
+export interface ApplicationMetrics {
+    appliedCount: number;
+    thisWeek: number;
+    thisMonth: number;
+    appliedToScreening: number;
+    screeningToInterview: number;
+    interviewToOffer: number;
+    rejectionRate: number;
+    offerrate: number;
+    ghostingRate: number;
 }

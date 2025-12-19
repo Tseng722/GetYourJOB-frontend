@@ -1,6 +1,6 @@
 // src/api/applicationApi.ts
 import axiosClient from "./axiosClient"
-import type { ApplicationForm, StatusType } from "../types/applicationType";
+import type { ApplicationForm, StatusType, ApplicationMetrics } from "../types/applicationType";
 
 
 export interface AllApplication {
@@ -76,3 +76,8 @@ export async function createApplication(
         throw new Error(message)
     }
 }
+
+export const getApplicationMetrics = async () => {
+    const res = await axiosClient.get<ApplicationMetrics>('/application/metrics')
+    return res.data
+};
