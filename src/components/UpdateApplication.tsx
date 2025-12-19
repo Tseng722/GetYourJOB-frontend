@@ -65,7 +65,7 @@ const UpdateApplication: React.FC = () => {
     }, []);
     const statusOptions: Array<{ value: StatusType; label: string }> = [
         { value: "inProgress", label: "In progress" },
-        { value: "applyed", label: "Applied" },
+        { value: "applied", label: "Applied" },
         { value: "firstInterview", label: "1st Interview" },
         { value: "secondInterview", label: "2nd Interview" },
         { value: "thirdInterview", label: "3rd Interview" },
@@ -183,6 +183,7 @@ const UpdateApplication: React.FC = () => {
 
     return (
         <Container className="mt-4 flex justify-between">
+            <h2 className="apple-title-primary mb-4">Edit Application</h2>
             <Form onSubmit={handleSave}>
                 <div className="d-flex gap-2 mb-4">
                     <Button variant="secondary" onClick={() => navigate(-1)}>
@@ -206,7 +207,7 @@ const UpdateApplication: React.FC = () => {
                 </div>
 
 
-                <h2 className="apple-title-primary mb-4">Edit Application</h2>
+
 
 
                 <div className="apple-card mb-4">

@@ -25,7 +25,7 @@ const CreateApplication: React.FC = () => {
 
     const statusOptions: Array<{ value: StatusType; label: string }> = [
         { value: "inProgress", label: "In progress" },
-        { value: "applyed", label: "Applied" },
+        { value: "applied", label: "Applied" },
         { value: "firstInterview", label: "1st Interview" },
         { value: "secondInterview", label: "2nd Interview" },
         { value: "thirdInterview", label: "3rd Interview" },

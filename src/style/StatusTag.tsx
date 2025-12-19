@@ -3,7 +3,7 @@ import "./StatusTag.css";
 
 const STATUS_LABELS: Record<string, string> = {
     inProgress: "In Progress",
-    applyed: "Applied",
+    applied: "Applied",
     firstInterview: "1st Interview",
     secondInterview: "2nd Interview",
     thirdInterview: "3rd Interview",
